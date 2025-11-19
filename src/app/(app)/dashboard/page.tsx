@@ -32,12 +32,14 @@ export default function DashboardPage() {
     getRooms().then(setRooms);
   }, []);
 
-  const handleDeviceUpdate = (deviceId: string, newStatus: Partial<Device['status']>) => {
+  const handleDeviceUpdate = async (deviceId: string, newStatus: Partial<Device['status']>) => {
     setDevices(prevDevices =>
       prevDevices?.map(d =>
         d._id === deviceId ? { ...d, status: { ...d.status, ...newStatus } } : d
       )
     );
+    // Refetch devices from DB after update
+    await mutate();
   };
 
   const groupedDevices = useMemo(() => {

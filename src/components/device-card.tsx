@@ -69,7 +69,8 @@ export default function DeviceCard({ device, onUpdate }: DeviceCardProps) {
 
   const Icon = device.type === 'door' ? (device.status.isOpen ? DoorOpen : DoorClosed) : (deviceIcons[device.type] || Zap);
 
-  const isUnavailable = device.type !== 'door' && !device.status.isOn;
+  // Always show controls, do not disable based on status
+  const isUnavailable = false;
 
   return (
     <Card className={cn('flex flex-col transition-all duration-300', isUnavailable && 'bg-muted/50')}>
@@ -93,7 +94,7 @@ export default function DeviceCard({ device, onUpdate }: DeviceCardProps) {
               step={10}
               onValueChange={handleSliderChange}
               onValueCommit={handleSliderCommit}
-              disabled={isUnavailable}
+              disabled={false}
             />
             <p className="text-center text-sm text-muted-foreground">Speed: {device.status.speed || 0}%</p>
           </div>
@@ -107,7 +108,7 @@ export default function DeviceCard({ device, onUpdate }: DeviceCardProps) {
               step={1}
               onValueChange={handleSliderChange}
               onValueCommit={handleSliderCommit}
-              disabled={isUnavailable}
+              disabled={false}
             />
             <p className="text-center text-sm text-muted-foreground">Temp: {device.status.temperature || 22}°C</p>
           </div>
